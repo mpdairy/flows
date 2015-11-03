@@ -8,7 +8,7 @@ client- and cluster-side tasks that can be used together,
 seemlessly, in the workflow.
 
 It's very alpha and still largely in the design stage.  The comments
-in `core.clj` provide a working example of a paralell computation.
+in `core.clj` provide a working example of a parallel computation.
 
 ## Workflows
 
@@ -27,7 +27,7 @@ A workflow consists of tasks, outputs, and inputs, put together as
 pairs that show how the segment should pass.
 
 
-A really trite exmaple of a workflow would be:
+A really trite example of a workflow would be:
 
 ```clj
 
@@ -41,7 +41,7 @@ A really trite exmaple of a workflow would be:
 Now if you stick that in the flows system and put some numbers in the
 `:in` async channel, it will spit out whatever `(minus4 (times2 (plus5
 n)))` is on the :out channel, except it will calculate each of those
-functions in different worker threads that would run in paralell if
+functions in different worker threads that would run in parallel if
 possible, like in this example:
 
 ```clj
@@ -53,11 +53,12 @@ possible, like in this example:
 [plus5 :out] [times2 :out] [minus4 :out]])
 
 ```
-In this example, if you put a `6` into `:in`, you'll get `11`, `12`,
+If you put a `6` into `:in`, you'll get `11`, `12`,
 and `2` on the `:out` chan.
 
-Because they can be computed in paralell, Flows will be able to spread
-the three tasks across the workers and it will only take one second.
+Because they can be computed in parallel, Flows can spread
+the three tasks across the workers and it will only take one second
+instead of three.
 
 ## Planned additions
 
@@ -87,15 +88,15 @@ So that you can easily have `:in-one -> :a -> :b -> :out` and
 
 You will be able to specify
 within the Flows catalog of tasks whether or not the task should be in
-the cluster or on the client. And it will run client tasks locally
+the cluster or on the client. It will run client tasks locally
 but send the segment to Onyx for any cluster
-tasks, such a querying the database or generating statistics, and it
+tasks, such a querying the database or generating statistics, then it
 will be able to receive the modified segment back from Onyx into the client, all
-within a Flows workflow. This will be pretty spiff for web stack usage.
+within one Flows workflow. This will be pretty spiff for web stack dev.
 
 ## License
 
-Copyright © 2015 FIXME
+Copyright © 2015 Matt Parker
 
 Distributed under the Eclipse Public License either version 1.0 or (at
 your option) any later version.
